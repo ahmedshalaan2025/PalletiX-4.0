@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PalletiX 4.0 | AI Predictive Maintenance</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --grey: #64748b;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --accent-gold: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            direction: ltr;
+        }
+
+        .dark-theme { background: var(--dark-bg); color: var(--white); }
+        .light-theme { background: var(--light-bg); color: var(--grey); }
+
+        /* Header */
+        header {
+            background: rgba(30, 58, 138, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        /* Logo */
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .site-logo {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-gold), var(--white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--accent-gold); }
+
+        .theme-toggle, .mobile-menu {
+            background: var(--accent-gold);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            color: var(--primary-blue);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            padding: 140px 2rem 100px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse">ircle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/>ircle cx="75" cy="75" r="1.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Sections base */
+        .packages,
+        .comparison,
+        .how-it-works,
+        .industries,
+        .sample-results,
+        .faq-section {
+            max-width: 1400px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: var(--grey);
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        /* Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 25px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border-top: 6px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-theme .package-card {
+            background: #1e293b;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+
+        .package-card:hover {
+            transform: translateY(-20px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+        }
+
+        .package-card.start { border-top-color: var(--success); }
+        .package-card.pro { border-top-color: var(--accent-gold); }
+        .package-card.enterprise { border-top-color: var(--primary-blue); }
+
+        .package-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .package-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .start .package-icon { background: var(--success); }
+        .pro .package-icon { background: var(--accent-gold); }
+        .enterprise .package-icon { background: var(--primary-blue); }
+
+        .package-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        .package-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 2.5rem;
+        }
+
+        .package-features li {
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .dark-theme .package-features li { border-bottom-color: #334155; }
+
+        .package-features i {
+            color: var(--success);
+            width: 25px;
+            font-size: 1.2rem;
+        }
+
+        /* Dashboard */
+        .dashboard-demo {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .dark-theme .dashboard-demo {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            margin-top: 3rem;
+        }
+
+        .dark-theme .dashboard-container {
+            background: #1e293b;
+        }
+
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .sensor-card {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .sensor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .sensor-value {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .sensor-unit {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .sensor-label {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .status-dot {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Pricing Calculator */
+        .pricing-calculator {
+            max-width: 800px;
+            margin: 6rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+        }
+
+        .dark-theme .pricing-calculator {
+            background: #1e293b;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        .form-group input, .form-group select {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+        }
+
+        .price-result {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-top: 2rem;
+        }
+
+        /* Comparison */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            margin-top: 3rem;
+        }
+
+        .dark-theme .comparison-table { background: #1e293b; }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            padding: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .comparison-table td {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .dark-theme .comparison-table td { border-bottom-color: #334155; }
+
+        .feature-yes { color: var(--success); font-size: 1.5rem; }
+        .feature-no { color: #94a3b8; font-size: 1.5rem; }
+
+        /* How It Works */
+        .how-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .how-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+            text-align: left;
+        }
+
+        .dark-theme .how-card { background: #1e293b; }
+
+        .how-step {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--secondary-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.6rem;
+        }
+
+        .how-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Industries */
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .industry-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+        }
+
+        .dark-theme .industry-card { background: #1e293b; }
+
+        .industry-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .industry-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(59,130,246,0.1);
+            color: var(--primary-blue);
+            font-size: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+
+        /* Sample Results */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+        }
+
+        .dark-theme .result-card { background: #1e293b; }
+
+        .result-metric {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 0.3rem;
+        }
+
+        .result-label {
+            font-size: 0.95rem;
+            color: var(--grey);
+            margin-bottom: 0.6rem;
+        }
+
+        .result-note {
+            font-size: 0.8rem;
+            color: var(--grey);
+        }
+
+        /* FAQ */
+        .faq-grid {
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 16px;
+            padding: 1.4rem 1.6rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            cursor: pointer;
+        }
+
+        .dark-theme .faq-item { background: #1e293b; }
+
+        .faq-q {
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-a {
+            margin-top: 0.6rem;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .faq-item.active .faq-a {
+            display: block;
+        }
+
+        /* Contact */
+        .contact-section {
+            max-width: 800px;
+            margin: 6rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+        }
+
+        .dark-theme .contact-section {
+            background: #1e293b;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-row.full-width { grid-template-columns: 1fr; }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .success-message {
+            background: var(--success);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        /* Responsive */
+/* Package Dashboards */
+.package-dashboards {
+    max-width: 1400px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+}
+
+.tab-header {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 0.8rem 1.8rem;
+    border-radius: 999px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-blue);
+    transition: all 0.25s ease;
+}
+
+.dark-theme .tab-btn {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e5e7eb;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 10px 25px rgba(30,64,175,0.35);
+}
+
+.tab-content {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 22px 45px rgba(0,0,0,0.12);
+}
+
+.dark-theme .tab-content {
+    background: #1e293b;
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+.mini-dash-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.mini-card {
+    border-radius: 18px;
+    padding: 1.6rem 1.4rem;
+    background: #f8fafc;
+}
+
+.dark-theme .mini-card {
+    background: #0f172a;
+}
+
+.mini-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.6rem;
+}
+
+.mini-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59,130,246,0.12);
+    color: var(--primary-blue);
+}
+
+.mini-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.mini-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0.2rem 0;
+}
+
+.mini-caption {
+    font-size: 0.85rem;
+    color: var(--grey);
+}
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .packages-grid, .calculator-grid, .form-row,
+            .how-grid, .industries-grid, .results-grid { grid-template-columns: 1fr; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .nav-links { display: none; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        .animate { animation: fadeInUp 0.8s ease forwards; }
+    </style>
+</head>
+<body class="light-theme">
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo-wrap">
+                <img src="Logo1.jpg.jpg" alt="PalletiX 4.0 Logo" class="site-logo">
+                <span class="logo-text">PalletiX 4.0</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#pricing">Calculator</a></li>
+                <li><a href="#comparison">Comparison</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-content animate">
+            <h1>Minimize Downtime with PalletiX 4.0</h1>
+            <p>AI Predictive Maintenance for palletizing and intralogistics. Real-time monitoring, automated controls, and smarter spare parts planning.</p>
+            <div class="cta-buttons">
+                <a href="#pricing" class="cta-primary">Calculate Your Project Cost</a>
+                <a href="#contact" class="cta-secondary">Request Live Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages -->
+    <section class="packages" id="packages">
+        <h2 class="section-title">Choose Your PalletiX Package</h2>
+        <p class="section-subtitle">Three scalable tiers designed for different plant sizes and automation levels.</p>
+        
+        <div class="packages-grid">
+            <div class="package-card start animate">
+                <div class="package-header">
+                    <div class="package-icon"><i class="fas fa-key"></i></div>
+                </div>
+                <h3>Standard Package</h3>
+                <div class="package-price">Starting From EGP 15,000/month</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> Real-time Monitoring Dashboard (6+ sensors)</li>
+                    <li><i class="fas fa-check"></i> Instant Fault Notifications</li>
+                    <li><i class="fas fa-check"></i> WhatsApp / Telegram / Email Alerts</li>
+                    <li><i class="fas fa-check"></i> Basic Trend Analytics</li>
+                    <li><i class="fas fa-check"></i> Daily Health Summary Reports</li>
+                </ul>
+                <button class="cta-primary" onclick="selectPackage('start')">Choose Standard Package</button>
+            </div>
+
+            <div class="package-card pro animate">
+                <div class="package-header">
+                    <div class="package-icon"><i class="fas fa-star"></i></div>
+                </div>
+                <h3>Pro Package</h3>
+                <div class="package-price">Starting From EGP 35,000/month</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> All Standard Package Features</li>
+                    <li><i class="fas fa-check"></i> Automatic Line Control Actions</li>
+                    <li><i class="fas fa-check"></i> Motor Auto‑Stop & Safe Shutdown</li>
+                    <li><i class="fas fa-check"></i> Advanced AI Failure Prediction</li>
+                    <li><i class="fas fa-check"></i> Engineering Analytics & Root‑Cause Dashboards</li>
+                </ul>
+                <button class="cta-primary" onclick="selectPackage('pro')">Choose Pro Package</button>
+            </div>
+
+            <div class="package-card enterprise animate">
+                <div class="package-header">
+                    <div class="package-icon"><i class="fas fa-crown"></i></div>
+                </div>
+                <h3>Enterprise Package</h3>
+                <div class="package-price">Starting From EGP 75,000/month</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> All Pro Package Features</li>
+                    <li><i class="fas fa-check"></i> 24/7 AI Maintenance Assistant</li>
+                    <li><i class="fas fa-check"></i> Supply Chain & Spare Parts Planner</li>
+                    <li><i class="fas fa-check"></i> Automatic RFQ & Order Suggestions</li>
+                    <li><i class="fas fa-check"></i> Custom Integrations & API</li>
+                </ul>
+                <button class="cta-primary" onclick="selectPackage('enterprise')">Choose Enterprise Package</button>
+            </div>
+        </div>
+    </section>
+<!-- Package Dashboards -->
+<section class="package-dashboards">
+    <h2 class="section-title">What Each Package Delivers</h2>
+    <p class="section-subtitle">Mini dashboards showing exactly what your team gets with each tier.</p>
+
+    <div class="tab-header">
+        <button class="tab-btn active" data-tab="start">Standard Dashboard</button>
+        <button class="tab-btn" data-tab="pro">Pro Dashboard</button>
+        <button class="tab-btn" data-tab="enterprise">Enterprise Dashboard</button>
+    </div>
+
+    <div class="tab-content">
+        <!-- Start -->
+        <div class="tab-panel active" id="tab-start">
+            <h3 style="margin-bottom: 0.8rem;">Standard Package – Monitoring & Alerts</h3>
+            <p style="font-size: 0.95rem; color: var(--grey); margin-bottom: 1.4rem;">
+                For plants that want clear visibility on critical assets and simple, reliable alerts.
+            </p>
+            <div class="mini-dash-grid">
+                <div class="mini-card">
+                    <div class="mini-card-header">
+                        <div class="mini-icon"><i class="fas fa-wave-square"></i></div>
+                        <div class="mini-title">Live Sensor Streams</div>
+                    </div>
+                    <div class="mini-value">6 sensors</div>
+                    <div class="mini-caption">Vibration, temperature, current and pressure – updated every few seconds.</div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-header">
+                        <div class="mini-icon"><i class="fas fa-bell"></i></div>
+                        <div class="mini-title">Multi-channel Alerts</div>
+                    </div>
+                    <div class="mini-value">3 channels</div>
+                    <div class="mini-caption">Send fault alerts to WhatsApp, Telegram and email from one rules engine.</div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-header">
+                        <div class="mini-icon"><i class="fas fa-envelope-open-text"></i></div>
+                        <div class="mini-title">Daily Health Summary</div>
+                    </div>
+                    <div class="mini-value">1 email/day</div>
+                    <div class="mini-caption">Automatic daily report with alarms, trends and recommended checks.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pro -->
+        <div class="tab-panel" id="tab-pro">
+            <h3 style="margin-bottom: 0.8rem;">Pro Package – Automated Line Control</h3>
+            <p style="font-size: 0.95rem; color: var(--grey); margin-bottom: 1.4rem;">
+                Adds automatic reactions to critical faults and deeper analytics for engineering teams.
+            </p>
+            <div class="mini-dash-grid">
+                <div class="mini-card">
+                    <div class="mini-card-header">
+                        <div class="mini-icon"><i class="fas fa-power-off"></i></div>
+                        <div class="mini-title">Auto Line Stop</div>
+                    </div>
+                    <div class="mini-value">Safety logic</div>
+                    <div class="mini-caption">Stops selected motors when vibration or temperature crosses critical thresholds.</div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-header">
+                        <div class="mini-icon"><i class="fas fa-fire-extinguisher"></i></div>
+                        <div class="mini-title">Emergency Shutdown Demo</div>
+                    </div>
+                    <div class="mini-value">Simulated</div>
+                    <div class="mini-caption">Dashboard button to simulate emergency stop sequences for operator training.</div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-header">
+                        <div class="mini-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="mini-title">Failure Risk Score</div>
+                    </div>
+                    <div class="mini-value">0–100</div>
+                    <div class="mini-caption">Aggregated score per asset combining load, history and abnormal patterns.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="tab-panel" id="tab-enterprise">
+            <h3 style="margin-bottom: 0.8rem;">Enterprise – AI & Supply Chain View</h3>
+            <p style="font-size: 0.95rem; color: var(--grey); margin-bottom: 1.4rem;">
+                Complete cockpit for maintenance, production and procurement teams working together.
+            </p>
+            <div class="mini-dash-grid">
+                <div class="mini-card">
+                    <div class="mini-card-header">
+                        <div class="mini-icon"><i class="fas fa-robot"></i></div>
+                        <div class="mini-title">AI Maintenance Assistant</div>
+                    </div>
+                    <div class="mini-value">Chat panel</div>
+                    <div class="mini-caption">Ask about alarms, root causes and recommended actions directly from the dashboard.</div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-header">
+                        <div class="mini-icon"><i class="fas fa-box-open"></i></div>
+                        <div class="mini-title">Spare Parts Risk Map</div>
+                    </div>
+                    <div class="mini-value">Per asset</div>
+                    <div class="mini-caption">Visual view of which motors or gearboxes are at risk vs. current stock on hand.</div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-header">
+                        <div class="mini-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <div class="mini-title">RFQ & Auto Orders</div>
+                    </div>
+                    <div class="mini-value">Draft RFQs</div>
+                    <div class="mini-caption">Automatically prepares RFQs and purchase suggestions for approval by supply chain.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Dashboard -->
+    <section class="dashboard-demo" id="dashboard">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title">Live Industrial Dashboard</h2>
+            <p class="section-subtitle">Monitor vibration, temperature, current, pressure, RPM and power in one view with automatic status evaluation.</p>
+        </div>
+        <div class="dashboard-container animate">
+            <div class="sensor-grid" id="sensorGrid"></div>
+        </div>
+    </section>
+
+    <!-- Pricing Calculator -->
+    <section class="pricing-calculator" id="pricing">
+        <h2 class="section-title">Smart Pricing Calculator</h2>
+        <p class="section-subtitle">Estimate monthly and total cost based on lines, sensors, and subscription duration.</p>
+        
+        <div class="calculator-grid">
+            <div class="form-group">
+                <label>Production Lines</label>
+                <input type="number" id="lines" min="1" max="50" value="1">
+            </div>
+            <div class="form-group">
+                <label>Sensors per Line</label>
+                <input type="number" id="sensors" min="5" max="100" value="10">
+            </div>
+            <div class="form-group">
+                <label>Package Type</label>
+                <select id="packageSelect">
+                    <option value="start">Standard (EGP 15,000/line)</option>
+                    <option value="pro">Pro (EGP 35,000/line)</option>
+                    <option value="enterprise">Enterprise (EGP 75,000/line)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Subscription Duration (Months)</label>
+                <input type="number" id="months" min="1" max="60" value="12">
+            </div>
+        </div>
+        
+        <div class="price-result" id="priceResult">
+            <div>Monthly Cost: <span id="monthlyPrice">0</span> EGP</div>
+            <div style="font-size: 1.2rem; margin-top: 1rem;">Total: <span id="totalPrice">0</span> EGP</div>
+        </div>
+        
+        <button class="cta-primary" style="margin-top: 2rem; display: block; margin-left: auto;" onclick="getQuote()">
+            Get Detailed Quote
+        </button>
+    </section>
+
+    <!-- Comparison -->
+    <section class="comparison" id="comparison">
+        <h2 class="section-title">Feature Comparison</h2>
+        <p class="section-subtitle">Quick overview of what you get at each tier.</p>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Standard</th>
+                    <th>Pro</th>
+                    <th>Enterprise</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>24/7 Real-time Monitoring</td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                </tr>
+                <tr>
+                    <td>Custom Notifications</td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                </tr>
+                <tr>
+                    <td>Automated Controls</td>
+                    <td><i class="fas fa-times feature-no"></i></td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                </tr>
+                <tr>
+                    <td>AI Chatbot</td>
+                    <td><i class="fas fa-times feature-no"></i></td>
+                    <td><i class="fas fa-times feature-no"></i></td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                </tr>
+                <tr>
+                    <td>Supplier & Inventory Planning</td>
+                    <td><i class="fas fa-times feature-no"></i></td>
+                    <td><i class="fas fa-times feature-no"></i></td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                </tr>
+                <tr>
+                    <td>Custom Integration & API</td>
+                    <td><i class="fas fa-times feature-no"></i></td>
+                    <td><i class="fas fa-times feature-no"></i></td>
+                    <td><i class="fas fa-check feature-yes"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <h2 class="section-title">How PalletiX 4.0 Works</h2>
+        <p class="section-subtitle">A simple three‑step flow from raw sensor data to automated maintenance actions.</p>
+        <div class="how-grid">
+            <div class="how-card">
+                <div class="how-step">Step 1 · Connect</div>
+                <h3>Connect Sensors & PLCs</h3>
+                <p>Non‑invasive vibration, temperature, current and pressure sensors are connected to existing PLCs or industrial gateways. Data is streamed securely to the PalletiX engine.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-step">Step 2 · Analyze</div>
+                <h3>AI-driven Condition Models</h3>
+                <p>Signal processing and AI models learn normal behavior, detect early anomalies, and calculate KPIs such as downtime risk, MTBF and MTTR trends for each asset.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-step">Step 3 · Act</div>
+                <h3>Alerts, Controls & Planning</h3>
+                <p>Alerts are sent via WhatsApp, Telegram or email, and—depending on the package—automatic line stops, safe shutdowns and spare‑parts recommendations are triggered.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries -->
+    <section class="industries">
+        <h2 class="section-title">Industries We Focus On</h2>
+        <p class="section-subtitle">Built for high‑throughput environments where every minute of downtime matters.</p>
+        <div class="industries-grid">
+            <div class="industry-card">
+                <span class="industry-tag">Packaging & Palletizing</span>
+                <h3>Bottling and Packaging Lines</h3>
+                <p>Monitor conveyors, palletizers, case packers and wrapping stations to avoid unplanned stops and late shipments.</p>
+            </div>
+            <div class="industry-card">
+                <span class="industry-tag">FMCG & Food</span>
+                <h3>High-Speed FMCG Plants</h3>
+                <p>Protect critical motors, compressors and cooling assets in food and beverage factories with continuous health checks.</p>
+            </div>
+            <div class="industry-card">
+                <span class="industry-tag">Logistics</span>
+                <h3>Warehouses & 3PL Hubs</h3>
+                <p>Keep sorters, shuttles and automated storage systems available for peak seasons with predictive alerts.</p>
+                       </div>
+        </div>
+    </section>
+
+    <!-- Sample Results -->
+    <section class="sample-results">
+        <h2 class="section-title">Sample Results & KPIs</h2>
+        <p class="section-subtitle">Based on industry studies and internal modelling, predictive maintenance can significantly improve uptime and cost per pallet.</p>
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-metric">30–50%</div>
+                <div class="result-label">Potential reduction in unplanned downtime with a mature predictive program.</div>
+                <p class="result-note">Typical range reported across predictive maintenance deployments. Actual results depend on asset condition and baseline practices.</p>
+            </div>
+            <div class="result-card">
+                <div class="result-metric">10–40%</div>
+                <div class="result-label">Estimated reduction in maintenance cost per year through better planning and fewer emergency repairs.</div>
+                <p class="result-note">Model estimate combining fewer rush interventions and better spare‑parts utilization.</p>
+            </div>
+            <div class="result-card">
+                <div class="result-metric">26–28 mo.</div>
+                <div class="result-label">Typical payback window for predictive maintenance in high‑utilization lines.</div>
+                <p class="result-note">Indicative range from published predictive maintenance case studies; used here as a reference, not a guaranteed ROI.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Key points maintenance and operations teams usually ask before starting a pilot.</p>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <div class="faq-q">
+                    <span>How long does it take to deploy PalletiX 4.0 on one line?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-a">
+                    In a typical brownfield line with existing PLCs, a basic pilot can be installed and connected within 2–5 days, including sensor mounting, basic dashboards and first alert rules. Full optimization usually takes a few weeks of data collection.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">
+                    <span>What hardware is required on site?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-a">
+                    PalletiX uses vibration, temperature, current and pressure sensors connected either directly to your PLC panels or to an industrial IoT gateway. The exact bill of materials depends on motor power, safety requirements and network topology.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">
+                    <span>Can PalletiX work with our existing SCADA or CMMS?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-a">
+                    The platform is designed to expose data via APIs and standard industrial protocols, so it can push alarms and work orders into existing SCADA or maintenance systems with the Enterprise package.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">
+                    <span>How do you handle data security?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-a">
+                    Data is encrypted in transit, access is role‑based, and you can choose between on‑premise or cloud‑hosted deployment depending on your IT and security policies.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section" id="contact">
+        <h2 class="section-title">Contact PalletiX Now</h2>
+        <p style="text-align: center; font-size: 1.3rem; margin-bottom: 3rem; color: var(--grey);">
+            We'll reply within 24 hours | Call: +201001477947
+        </p>
+        
+        <form id="contactForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Package Required</label>
+                    <select id="contactPackage" required>
+                        <option value="">Select Package</option>
+                        <option value="start">Start</option>
+                        <option value="pro">Pro</option>
+                        <option value="enterprise">Enterprise</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group full-width">
+                <label>Project Details</label>
+                <textarea id="message" placeholder="Describe production line, number of machines, requirements..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> Send Request
+            </button>
+        </form>
+        
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+            <h3>Request Sent Successfully!</h3>
+            <p>We'll contact you within 24 hours on <strong id="confirmPhone"></strong></p>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: #f8fafc; border-radius: 15px;">
+            <h4><i class="fas fa-phone"></i> Call Now</h4>
+            <p style="font-size: 1.5rem; font-weight: 700; color: var(--primary-blue);">
+                +201001477947
+            </p>
+            <p>palletix4.0@gmail.com</p>
+        </div>
+    </section>
+
+    <script>
+        let selectedPackage = '';
+        const companyEmail = 'ahmed.shalaan.2017@gmail.com';
+        const companyPhone = '01117707164';
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            document.body.classList.toggle('light-theme');
+            const icon = document.querySelector('.theme-toggle i');
+            icon.className = document.body.classList.contains('dark-theme') ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        const sensors = [
+            { name: 'Vibration', unit: 'mm/s', value: 2.3, max: 5, icon: 'fas fa-wave-square' },
+            { name: 'Temperature', unit: '°C', value: 67, max: 80, icon: 'fas fa-thermometer-half' },
+            { name: 'Current', unit: 'A', value: 12.4, max: 15, icon: 'fas fa-bolt' },
+            { name: 'Pressure', unit: 'bar', value: 4.2, max: 6, icon: 'fas fa-tachometer-alt' },
+            { name: 'Speed', unit: 'RPM', value: 1450, max: 1500, icon: 'fas fa-cogs' },
+            { name: 'Power Usage', unit: 'kW', value: 7.8, max: 10, icon: 'fas fa-plug' },
+{ name: 'Line Health Index', unit: '%', value: 92, max: 100, icon: 'fas fa-heartbeat' },
+{ name: 'Pallets per Hour', unit: ' p/h', value: 185, max: 220, icon: 'fas fa-boxes-stacked' },
+{ name: 'Maintenance Risk', unit: '%', value: 18, max: 100, icon: 'fas fa-triangle-exclamation' },
+
+        ];
+
+        function createSensorCard(sensor) {
+            const percent = (sensor.value / sensor.max) * 100;
+            const status = percent > 85 ? 'danger' : percent > 70 ? 'warning' : 'normal';
+            const statusColor = status === 'danger' ? '#ef4444' : status === 'warning' ? '#f59e0b' : '#10b981';
+            return `
+                <div class="sensor-card ${status}" style="animation: pulse ${Math.random() * 2 + 1}s infinite;">
+                    <i class="${sensor.icon}" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.9;"></i>
+                    <div class="sensor-value">${sensor.value.toFixed(1)}<span class="sensor-unit">${sensor.unit}</span></div>
+                    <div class="sensor-label">${sensor.name}</div>
+                    <div class="status-dot" style="background: ${statusColor};"></div>
+                    <div style="position: absolute; bottom: 1rem; left: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                        ${percent.toFixed(0)}%
+                    </div>
+                </div>
+            `;
+        }
+
+        function updatePricing() {
+            const lines = parseInt(document.getElementById('lines').value) || 1;
+            const sensorsCount = parseInt(document.getElementById('sensors').value) || 10;
+            const packageType = document.getElementById('packageSelect').value;
+            const months = parseInt(document.getElementById('months').value) || 12;
+
+            const basePrices = { start: 15000, pro: 35000, enterprise: 75000 };
+            const sensorMultiplier = Math.ceil(sensorsCount / 10) * 500;
+            const monthlyPrice = (basePrices[packageType] * lines) + sensorMultiplier;
+            const totalPrice = monthlyPrice * months;
+
+            document.getElementById('monthlyPrice').textContent = monthlyPrice.toLocaleString();
+            document.getElementById('totalPrice').textContent = totalPrice.toLocaleString();
+        }
+
+        function getQuote() {
+            const lines = document.getElementById('lines').value;
+            const sensorsCount = document.getElementById('sensors').value;
+            const packageType = document.getElementById('packageSelect').value;
+            const months = document.getElementById('months').value;
+            const packageNames = { start: 'Start', pro: 'Pro', enterprise: 'Enterprise' };
+
+            const subject = `PalletiX Quote Request - ${packageNames[packageType]} (${lines} lines)`;
+            const body = `Hello PalletiX Team,\n\nI would like a quote for:\n- Package: ${packageNames[packageType]}\n- Lines: ${lines}\n- Sensors: ${sensorsCount}\n- Duration: ${months} months\n\nThank you!`;
+            const mailtoLink = `mailto:${companyEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(mailtoLink, '_blank');
+        }
+
+        function selectPackage(type) {
+            selectedPackage = type;
+            document.getElementById('contactPackage').value = type;
+            document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
+            document.querySelectorAll('.package-card').forEach(card => card.style.transform = 'scale(0.98)');
+            setTimeout(() => {
+                document.querySelectorAll('.package-card').forEach(card => card.style.transform = 'scale(1)');
+            }, 200);
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                package: document.getElementById('contactPackage').value,
+                message: document.getElementById('message').value
+            };
+            const packageNames = { start: 'Start', pro: 'Pro', enterprise: 'Enterprise' };
+
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('confirmPhone').textContent = formData.phone;
+            document.getElementById('contactForm').style.display = 'none';
+
+            const subject = `PalletiX 4.0 Request - ${formData.name} (${packageNames[formData.package] || 'Not specified'})`;
+            const body = `
+Hello PalletiX Team,
+
+New request received:
+Name: ${formData.name}
+Phone: ${formData.phone}
+Email: ${formData.email}
+Package: ${packageNames[formData.package] || 'Not specified'}
+Details: ${formData.message}
+
+Please contact the client immediately.
+            `;
+            const mailtoLink = `mailto:${companyEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(mailtoLink, '_blank');
+        });
+
+        // FAQ toggle
+        document.addEventListener('click', function(e) {
+            const item = e.target.closest('.faq-item');
+            if (!item) return;
+            item.classList.toggle('active');
+        });
+// Package dashboards tab switch
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-tab');
+
+        // buttons
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // panels
+        document.querySelectorAll('.tab-panel').forEach(panel => {
+            panel.classList.remove('active');
+        });
+        const activePanel = document.getElementById('tab-' + target);
+        if (activePanel) activePanel.classList.add('active');
+    });
+});
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sensorGrid = document.getElementById('sensorGrid');
+            sensorGrid.innerHTML = sensors.map(createSensorCard).join('');
+            setInterval(() => {
+                sensors.forEach(sensor => {
+                    sensor.value = Math.max(0, Math.min(sensor.max,
+                        sensor.value + (Math.random() - 0.5) * (sensor.max * 0.08)
+                    ));
+                });
+                sensorGrid.innerHTML = sensors.map(createSensorCard).join('');
+            }, 2500);
+
+            document.querySelectorAll('#lines, #sensors, #packageSelect, #months')
+                .forEach(input => input.addEventListener('input', updatePricing));
+            updatePricing();
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('animate');
+                });
+            });
+            document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
